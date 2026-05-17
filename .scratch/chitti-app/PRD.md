@@ -4,21 +4,20 @@ Status: ready-for-agent
 
 ## Problem Statement
 
-Parents struggle to enforce healthy digital habits for their children aged 8–12 in a way that feels positive rather than punitive. Existing parental control apps block and restrict, but do not engage — children feel policed, not guided. There is no companion that reframes screen time limits as opportunities, encourages physical activity and task completion, and answers children's questions in a safe, age-appropriate way.
+Parents struggle to enforce healthy digital habits for their children aged 8–12 in a way that feels positive rather than punitive. Existing parental control apps (Google Family Link, Bark) block and restrict, but do not engage — children feel policed, not guided. There is no companion that reframes screen time limits as opportunities, encourages task completion, and answers children's questions in a safe, age-appropriate way.
 
 ---
 
 ## Solution
 
-Chitti is an Android companion app featuring a cartoon character that lives on the child's device. Chitti:
+Chitti is an Android companion app featuring a cartoon character that lives on the child's device. Unlike enforcement-only parental control tools, Chitti acts as a positive companion — not a warden:
 - Reminds children about parent-configured tasks (study, music practice, etc.) with warmth and encouragement
-- Reframes screen time restrictions positively ("We've got 10 mins left — let's make it count!")
-- Gates screen time resumption behind short physical activities (eye exercises, jumping jacks)
-- Awards points for task completion, unlocking badges and optional extra screen time
-- Answers children's questions using an AI model with a kid-safe system prompt
+- Reframes device-wide screen time restrictions positively ("We've got 10 mins left — let's make it count!")
+- Awards points for task completion, unlocking badges, costume changes, and optional extra screen time
+- Answers children's questions in multi-turn voice conversations using a kid-safe AI
 - Escalates gently: soft notification first, full-screen Chitti intervention only when needed
 
-Parents configure everything through a PIN-gated section of the same app. No separate parent app required.
+Parents configure everything through a PIN-gated section of the same app. No separate parent app required. App-specific controls (restricting individual apps) are the domain of dedicated tools like StayFree — Chitti manages device-wide time windows and habit formation.
 
 ---
 
@@ -26,52 +25,49 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 
 ### Child — Task Management
 1. As a child, I want to see my tasks for today on Chitti's home screen, so that I know what I need to do.
-2. As a child, I want Chitti to remind me when a task is due, so that I don't forget.
-3. As a child, I want to tap "Done" when I finish a task, so that I can earn my reward points.
-4. As a child, I want Chitti to celebrate with me when I complete a task, so that I feel proud of my effort.
-5. As a child, I want to see how many points I have earned today, so that I know my progress.
-6. As a child, I want to see my badges and level, so that I feel motivated to keep completing tasks.
+2. As a child, I want to see upcoming tasks for the next few days, so that I can plan ahead.
+3. As a child, I want Chitti to remind me when a task is due, so that I don't forget.
+4. As a child, I want to tap "Done" when I finish a task, so that I can earn my reward points.
+5. As a child, I want Chitti to celebrate with me when I complete a task, so that I feel proud of my effort.
+6. As a child, I want to see how many points I have earned today, so that I know my progress.
+7. As a child, I want to see my badges and level, so that I feel motivated to keep completing tasks.
+8. As a child, I want to see my unlocked Chitti costumes and choose which one Chitti wears, so that earning points feels meaningful.
 
 ### Child — Screen Time
-7. As a child, I want Chitti to warn me 10 minutes before my screen time ends, so that I can wrap up what I'm doing.
-8. As a child, I want to see a countdown of time remaining during my screen session, so that I can pace myself.
-9. As a child, I want Chitti to guide me through a short exercise when my time is up, so that I can earn my next session.
-10. As a child, I want Chitti to speak to me in a friendly, encouraging voice, so that restrictions don't feel like punishment.
-11. As a child, I want to earn extra screen time through task completion, so that good habits are rewarded.
+9. As a child, I want Chitti to warn me 10 minutes before my screen time ends, so that I can wrap up what I'm doing.
+10. As a child, I want to see how much screen time I have remaining, so that I can pace myself.
+11. As a child, I want Chitti to show me a positive message when my screen time ends, so that restrictions don't feel like punishment.
+12. As a child, I want to redeem my earned points for extra screen time, so that I can use my rewards when I want them.
 
 ### Child — Q&A with Chitti
-12. As a child, I want to ask Chitti questions by speaking aloud, so that I can get answers without typing.
-13. As a child, I want Chitti to answer in a way I can understand, so that I actually learn from the interaction.
-14. As a child, I want Chitti to give me a helpful response even when there's no internet, so that the app always works.
-
-### Child — Activities & Exercises
-15. As a child, I want Chitti to guide me through eye exercises step by step, so that I know what to do.
-16. As a child, I want Chitti to count my jumping jacks with me, so that exercising feels fun.
-17. As a child, I want to see a completion animation when I finish an exercise, so that I feel accomplished.
+13. As a child, I want to start a conversation with Chitti by saying "Hey Chitti" or tapping the character, so that I can ask questions naturally.
+14. As a child, I want Chitti to remember the context of our conversation so I can ask follow-up questions, so that conversations feel natural.
+15. As a child, I want Chitti to answer in a way I can understand, so that I actually learn from the interaction.
+16. As a child, I want Chitti to give me a helpful response even when there's no internet, so that the app always works.
 
 ### Parent — Task Configuration
-18. As a parent, I want to create tasks with a name, duration, and schedule, so that I can set expectations for my child.
-19. As a parent, I want to schedule tasks to repeat daily, on specific weekdays, or on custom days, so that recurring habits are automated.
-20. As a parent, I want to set a fixed time for each task, so that Chitti reminds my child at the right moment.
-21. As a parent, I want to assign point values to tasks, so that I can weight more important habits higher.
-22. As a parent, I want to edit or delete tasks, so that I can adjust as my child's schedule changes.
-23. As a parent, I want to toggle tasks active or inactive, so that I can pause tasks without deleting them.
+17. As a parent, I want to create tasks with a name, duration, and schedule, so that I can set expectations for my child.
+18. As a parent, I want to schedule tasks to repeat daily, on specific weekdays, or on custom days, so that recurring habits are automated.
+19. As a parent, I want to set a fixed time for each task, so that Chitti reminds my child at the right moment.
+20. As a parent, I want to assign point values to tasks, so that I can weight more important habits higher.
+21. As a parent, I want to edit or delete tasks, so that I can adjust as my child's schedule changes.
+22. As a parent, I want to toggle tasks active or inactive, so that I can pause tasks without deleting them.
 
 ### Parent — Screen Time Rules
-24. As a parent, I want to set time windows during which certain apps or all apps are restricted, so that I control when my child uses the device.
-25. As a parent, I want Chitti to enforce these windows automatically, so that I don't have to intervene manually.
-26. As a parent, I want to configure which physical activity Chitti uses as the activity gate, so that I can match my child's ability.
+23. As a parent, I want to set device-wide time windows during which the device is restricted, so that I control when my child has screen time.
+24. As a parent, I want Chitti to enforce these windows automatically, so that I don't have to intervene manually.
 
 ### Parent — Rewards Configuration
-27. As a parent, I want to optionally enable screen time bonus points, so that task completion translates directly into earned screen time.
-28. As a parent, I want to set how many points equal how many extra minutes of screen time, so that I control the reward rate.
-29. As a parent, I want to see my child's task completion history, so that I can have informed conversations about their habits.
-30. As a parent, I want to see my child's total points and badges earned, so that I can celebrate their progress.
+25. As a parent, I want to optionally enable screen time bonus redemption, so that task completion can translate directly into earned screen time.
+26. As a parent, I want to set how many points equal how many extra minutes of screen time, so that I control the reward rate.
+27. As a parent, I want to see a weekly summary of my child's completed and missed tasks, so that I can have informed conversations about their habits.
+28. As a parent, I want to see my child's total points and badges earned, so that I can celebrate their progress.
 
 ### Parent — Account & Setup
-31. As a parent, I want to set a PIN to protect the parent configuration screens, so that my child cannot change their own settings.
-32. As a parent, I want to be walked through granting the required permissions during onboarding, so that setup is straightforward.
-33. As a parent, I want to create a child profile with a name and age, so that Chitti personalises interactions.
+29. As a parent, I want to set a PIN to protect the parent configuration screens, so that my child cannot change their own settings.
+30. As a parent, I want to be walked through granting the required app permissions during onboarding, so that setup is straightforward.
+31. As a parent, I want Chitti to detect if required permissions are missing and guide me to re-enable them, so that the app works reliably after setup.
+32. As a parent, I want to create a child profile with a name and age, so that Chitti personalises interactions.
 
 ---
 
@@ -80,104 +76,129 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 ### Module Architecture
 
 **ChittiCharacter**
-- Lottie animation player managing named states: `idle`, `talking`, `celebrating`, `exercising`, `warning`
-- Adaptive tone engine: rule-based context mapping (rest/wind-down → calm, activity/celebration → energetic, task reminder → encouraging). Default tone: calm & wise.
+- Lottie animation player managing named states: `idle`, `talking`, `celebrating`, `warning`
+- Adaptive tone engine: rule-based mapping from an explicit `ChittiContext` enum to tone + animation state:
+  ```kotlin
+  enum class ChittiContext {
+      TASK_REMINDER,   // → encouraging tone, attentive animation
+      TASK_COMPLETE,   // → energetic tone, celebration animation
+      SCREEN_WARNING,  // → calm tone, gentle warning animation
+      SCREEN_CUTOFF,   // → calm tone, time's-up animation
+      QNA,             // → calm/curious tone, talking animation
+      IDLE             // → calm & wise (default), idle animation
+  }
+  ```
 - TTS wrapper around Android `TextToSpeech` with a swappable interface for future cloud TTS. Caches frequently used phrases as audio files.
-- Single interface: `speak(text: String, context: ChittiContext)` and `animate(state: ChittiState)`
+- Interface: `speak(text: String, context: ChittiContext)` and `animate(state: ChittiState)`
 
 **KidHomeScreen**
 - Primary child-facing UI built in Jetpack Compose
-- Displays: Chitti character (Lottie), today's pending task checklist, points balance, badge count
-- Task row: name, estimated duration, "Start" / "Done" button
-- "Ask Chitti" voice button triggers STT → QnAEngine pipeline
-- Receives task completion events and triggers ChittiCharacter celebration sequence
+- Displays: Chitti character (Lottie), today's pending task checklist, upcoming tasks tab, points balance, badge count, costume selector, screen time remaining indicator
+- Task row: name, estimated duration, "Done" button
+- Wake word detection ("Hey Chitti", "Hi Chitti") and tap-on-character both trigger QnAEngine session
+- Receives task completion events → triggers ChittiCharacter celebration sequence
 
 **TaskEngine**
 - Manages task lifecycle: create, read, update, delete, toggle active
-- Computes "due today" list from schedule rules and current date
+- Computes "due today" list from schedule rules and current date (midnight rollover boundary)
+- Computes "upcoming" list for next 7 days for child preview
 - Registers/cancels AlarmManager alarms when tasks are saved or modified
-- On alarm fire: posts tiered notification (immediate), registers a 5-minute delayed alarm for full-screen escalation if not acknowledged
-- `markComplete(taskId)`: records completion timestamp, triggers RewardSystem point award, cancels any pending escalation alarm
-- Exposes: `getPendingToday(): List<Task>`, `markComplete(taskId)`, `createTask(task)`, `updateTask(task)`, `deleteTask(taskId)`
+- On alarm fire: posts tiered notification (immediate), registers 5-minute delayed alarm for full-screen escalation if not acknowledged
+- `markComplete(taskId)`: records completion timestamp, triggers RewardSystem point award, cancels pending escalation alarm
+- Calendar-like scheduling edge cases:
+  - Device off at task time → fire on next boot; skip if > 2 hours past due
+  - Two tasks at same time → independent alarms, both fire
+  - "Today" boundary → midnight (00:00) rollover
+- Exposes: `getPendingToday(): List<Task>`, `getUpcoming(days: Int): List<ScheduledTask>`, `markComplete(taskId)`, `createTask(task)`, `updateTask(task)`, `deleteTask(taskId)`
 
 **RewardSystem**
 - Maintains points ledger in Room database (append-only transaction log)
-- Badge/level rules: defined as a static table of thresholds (e.g. 50pts = Bronze badge, 200pts = Silver)
-- Screen time bonus: if parent toggle enabled, converts points at configured rate into extra screen time minutes. Communicates with ScreenTimeRestrictions to credit extra time.
-- Exposes: `awardPoints(taskId, points)`, `getBalance(): Int`, `checkNewBadges(): List<Badge>`, `getHistory(): List<PointTransaction>`
+- Badge/level rules: static threshold table (e.g. 50pts = Bronze badge, 200pts = Silver)
+- Costume unlocks: static table mapping point milestones to Lottie costume asset names
+- Screen time bonus: child manually redeems points from KidHomeScreen via a "Redeem" action. `redeemForScreenTime(points)` calls ScreenTimeRestrictions to credit extra minutes at the parent-configured rate.
+- Exposes: `awardPoints(taskId, points)`, `getBalance(): Int`, `checkNewBadges(): List<Badge>`, `getUnlockedCostumes(): List<Costume>`, `redeemForScreenTime(points)`, `getHistory(): List<PointTransaction>`
 
 **ScreenTimeRestrictions**
-- Stores parent-configured time windows in Room (start time, end time, days active, activity gate type)
-- AlarmManager schedules: 10-minute warning alarm + hard cutoff alarm for each active window
-- On 10-min warning: fires high-priority notification with `setFullScreenIntent` pointing to `ChittiWarningActivity`
-- On hard cutoff: launches `ChittiBlockActivity` (full-screen, non-dismissible without completing ActivityGate)
-- Screen time bonus integration: adjusts cutoff alarm time when RewardSystem credits extra minutes
+- Stores parent-configured device-wide time windows in Room (start time, end time, days active)
+- AlarmManager schedules: 10-minute warning alarm + hard cutoff alarm per active window
+- On 10-min warning: fires high-priority notification with `setFullScreenIntent` → `ChittiWarningActivity` (countdown + positive wrap-up message)
+- On hard cutoff: launches `ChittiBlockActivity` full-screen (positive time's-up message, no activity gate in MVP)
+- **Known MVP limitation:** child can exit `ChittiBlockActivity` via the Home button — soft deterrent only. Full enforcement requires v2 overlay.
+- `creditExtraMinutes(minutes)`: adjusts the hard cutoff alarm time forward by the given amount
 - Exposes: `setRestriction(restriction)`, `checkCurrentlyRestricted(): Boolean`, `creditExtraMinutes(minutes)`
 
-**ActivityGate**
-- Full-screen Compose UI presented inside `ChittiBlockActivity`
-- Gate types: `EYE_EXERCISES` (5-step guided sequence with Chitti animation), `JUMPING_JACKS` (count-based with Chitti counting aloud)
-- Chitti guides each step with voice + animation. On completion: fires callback to ScreenTimeRestrictions to lift block, triggers celebration sequence.
-- Exposes: `startGate(type: GateType, onComplete: () -> Unit)`
-
 **QnAEngine**
-- STT: Android `SpeechRecognizer` captures child's voice input
-- Online path: sends transcribed text to Claude API with a hardcoded kid-safe system prompt. Response text fed to ChittiCharacter TTS.
-- Offline/error path: selects from a bundled pool of generic fallback responses by topic category (curiosity, homework, feelings)
-- Exposes: `ask(onResult: (String) -> Unit)` — handles full STT → API → response pipeline internally
+- Activation: passive wake word detection ("Hey Chitti", "Hi Chitti") via Android `SpeechRecognizer`; also activated by tap on Chitti character. Wake word listening active only while screen is on.
+- Multi-turn: maintains a session context window of the last 6 exchanges, included in each Claude API call
+- Session ends after 60 seconds of silence or "bye Chitti" utterance
+- Online path: sends conversation history + new utterance to Claude API with kid-safe system prompt. Response text fed to ChittiCharacter TTS.
+- Offline/error path: selects from bundled pool of generic fallback responses by category (curiosity, homework, feelings)
+- Exposes: `startSession()`, `endSession()`, `ask(utterance: String, onResult: (String) -> Unit)`
 
 **ParentDashboard**
-- PIN-gated entry point: `PINGuard` module validates PIN before showing any parent screen
-- Screens: Task List, Task Editor, Screen Time Rules, Reward Config, Child History
-- `PINGuard`: stores hashed PIN in encrypted SharedPreferences; shows PIN entry dialog on any parent screen entry
+- PIN-gated entry point: `PINGuard` validates PIN before showing any parent screen
+- Screens: Task List, Task Editor, Screen Time Rules, Reward Config, Child History + Weekly Summary, Permission Health Check
+- `PINGuard`: hashed PIN stored in `EncryptedSharedPreferences`; PIN entry dialog on every parent screen entry
 
 **LocalDatabase (Room)**
-- Entities: `ChildProfile`, `Task`, `TaskSchedule`, `TaskCompletion`, `PointTransaction`, `Badge`, `ScreenTimeRule`, `RewardConfig`
-- `ChildProfile` is the root entity; all other entities have a `childId` foreign key — multi-child schema from day one, single-child UI for MVP
+- Entities: `ChildProfile`, `Task`, `TaskSchedule`, `TaskCompletion`, `PointTransaction`, `Badge`, `CostumeUnlock`, `ScreenTimeRule`, `RewardConfig`
+- `ChildProfile` is the root entity; all other entities carry a `childId` foreign key — multi-child schema from day one, single-child UI for MVP
 - Repositories: one per aggregate root (`TaskRepository`, `RewardRepository`, `RestrictionRepository`, `ProfileRepository`)
 
 **NotificationService**
-- `ForegroundService` that survives device reboot (registered via `RECEIVE_BOOT_COMPLETED`)
+- `ForegroundService` with persistent notification text: "Chitti is running"
+- Survives device reboot via `RECEIVE_BOOT_COMPLETED` broadcast receiver
 - On boot: re-registers all active AlarmManager alarms from the database
 - Manages notification channels: task reminders, screen time warnings
-- Escalation logic: on notification post, schedules a secondary alarm 5 minutes later; cancelled if child acknowledges the notification
+- Escalation logic: on notification post, schedules a secondary alarm 5 minutes later; cancelled on child acknowledgement
 
 ### Scheduling Approach
-- `AlarmManager.setExactAndAllowWhileIdle()` for time-critical alarms (task due, screen time cutoff)
-- `WorkManager` for non-time-critical periodic work (e.g. daily badge check, history cleanup)
-- All alarm registrations go through a single `AlarmScheduler` utility to avoid drift and duplication
+- `AlarmManager.setExactAndAllowWhileIdle()` for all time-critical alarms (task due, screen time cutoff)
+- `WorkManager` for non-time-critical periodic work (daily badge check, history cleanup, weekly summary generation)
+- All alarm registrations go through a single `AlarmScheduler` utility to prevent drift and duplication
 
 ### PIN Storage
 - PIN stored as a bcrypt hash in Android `EncryptedSharedPreferences` (Jetpack Security)
 - No plain-text PIN ever written to disk
+- Default PIN on first install: `0000`
+- MVP PIN recovery: app reinstall resets to `0000`. Full recovery (email/security questions) deferred to v2.
 
 ### Claude API Integration
 - HTTP client: Retrofit with OkHttp
 - System prompt enforces: age-appropriate language, no adult content, no personal data collection, response length ≤ 3 sentences
+- Conversation history: last 6 exchanges included per API call
 - API key stored in `BuildConfig` (injected at build time, not in source control)
-- Timeout: 8 seconds. On timeout → offline fallback path
+- Timeout: 8 seconds → offline fallback path on timeout
 
 ### Data Flow: Task Reminder
 ```
 AlarmManager fires
   → NotificationService posts high-priority notification
   → If not acknowledged in 5 min → AlarmManager fires escalation
-  → ChittiBlockActivity launches full-screen
-  → Child sees task prompt + "Mark Done" button
+  → ChittiFullScreenActivity launches (task prompt + "Mark Done" button)
   → TaskEngine.markComplete() called
   → RewardSystem.awardPoints() called
-  → ChittiCharacter.celebrate()
+  → ChittiCharacter.speak(celebration, ChittiContext.TASK_COMPLETE)
 ```
 
 ### Data Flow: Screen Time Restriction
 ```
 AlarmManager fires (10-min warning)
   → Notification with setFullScreenIntent → ChittiWarningActivity
+  → Chitti shows countdown + encouraging wrap-up message
 AlarmManager fires (hard cutoff)
-  → ChittiBlockActivity (non-dismissible)
-  → ActivityGate presented
-  → On gate complete → block lifted
-  → RewardSystem checks for screen time bonus → creditExtraMinutes()
+  → ChittiBlockActivity launches full-screen
+  → Chitti shows positive time's-up message ("Great session! See you next time.")
+  → Child can exit via Home button (known MVP limitation — v2 overlay will enforce)
+```
+
+### Data Flow: Screen Time Redemption
+```
+Child taps "Redeem" on KidHomeScreen
+  → RewardSystem.redeemForScreenTime(points)
+  → ScreenTimeRestrictions.creditExtraMinutes(calculatedMinutes)
+  → Cutoff alarm rescheduled to new time
+  → ChittiCharacter celebrates redemption
 ```
 
 ---
@@ -185,30 +206,34 @@ AlarmManager fires (hard cutoff)
 ## Testing Decisions
 
 **What makes a good test:**
-Tests should verify observable external behaviour through the module's public interface, not implementation details. A test should remain valid if the internal implementation is refactored. Avoid testing private methods, Room DAO internals, or Android framework internals directly — use fakes/in-memory databases instead.
+Tests should verify observable external behaviour through the module's public interface, not implementation details. A test should remain valid if the internal implementation is refactored. Avoid testing private methods, Room DAO internals, or Android framework internals — use fakes/in-memory databases instead.
 
 **TaskEngine**
-- Test that `getPendingToday()` returns only tasks scheduled for today's day-of-week at or before current time
-- Test that `markComplete()` records a completion entry and does NOT re-surface the task as pending for the same day
-- Test that `createTask()` with a daily schedule generates the correct AlarmManager registration
-- Test escalation: verify a 5-minute follow-up alarm is registered when a reminder notification fires, and is cancelled when `markComplete()` is called
+- `getPendingToday()` returns only tasks scheduled for today's day-of-week at or before current time
+- `markComplete()` records a completion entry and does NOT re-surface the task as pending for the same day
+- `createTask()` with a daily schedule generates the correct AlarmManager registration
+- Escalation: 5-minute follow-up alarm is registered when reminder fires; cancelled when `markComplete()` is called
+- Late-fire rule: task missed by > 2 hours on boot is skipped, not fired
 
 **RewardSystem**
-- Test that `awardPoints()` correctly appends to the ledger and `getBalance()` reflects the new total
-- Test badge threshold logic: awarding points across a threshold triggers `checkNewBadges()` to return the new badge
-- Test screen time bonus calculation: given a point balance and a configured rate, verify `creditExtraMinutes()` is called with the correct value
-- Test that the ledger is append-only: past transactions are never modified
+- `awardPoints()` appends to the ledger and `getBalance()` reflects the new total
+- Badge threshold logic: awarding points across a threshold triggers `checkNewBadges()` returning the new badge
+- Costume unlock: points reaching a milestone returns the correct costume in `getUnlockedCostumes()`
+- `redeemForScreenTime()`: given balance and configured rate, correct minutes calculated and `creditExtraMinutes()` called
+- Ledger is append-only: past transactions are never modified
 
 **ScreenTimeRestrictions**
-- Test that `checkCurrentlyRestricted()` returns `true` only within a configured time window on a matching day
-- Test that `creditExtraMinutes()` correctly extends the effective cutoff time
-- Test that a restriction spanning midnight (e.g. 10pm–7am) is correctly evaluated on both sides of midnight
-- Test that deactivated restrictions are not evaluated
+- `checkCurrentlyRestricted()` returns `true` only within a configured window on a matching day
+- `creditExtraMinutes()` correctly extends the effective cutoff time
+- Restriction spanning midnight (e.g. 10pm–7am) is correctly evaluated on both sides
+- Deactivated restrictions are not evaluated
 
 ---
 
 ## Out of Scope (MVP)
 
+- **App-specific restrictions** — device-wide time windows only; per-app controls handled by external tools (e.g. StayFree)
+- **Activity gate (exercise as screen time unlock)** — deferred to v2
 - True app overlay (`SYSTEM_ALERT_WINDOW`) — deferred to v2
 - Usage-based screen time tracking (`PACKAGE_USAGE_STATS`) — deferred to v2
 - Soft floating Chitti nudges over other apps — deferred to v2
@@ -220,14 +245,17 @@ Tests should verify observable external behaviour through the module's public in
 - Multi-child UI — deferred to v2 (schema is multi-child ready)
 - Cloud TTS for Chitti's voice — deferred to v2
 - COPPA / GDPR-K compliance work — deferred with cloud sync
+- PIN recovery via email / security questions — deferred to v2
 - iOS support — not planned
 
 ---
 
 ## Further Notes
 
-- **Device recommendation for development:** Use a stock Android device (Pixel or Android One) during MVP development. Manufacturer skin issues (MIUI, OneUI) affect background service survival and are a v2 concern.
-- **Lottie assets:** MVP can use a free placeholder Lottie character. Custom Chitti artwork can be swapped in without code changes — Lottie file names are the only coupling point.
-- **Claude API key:** Must be injected via `BuildConfig` at build time. Never committed to source control. Add `CLAUDE_API_KEY` to `.gitignore`-protected local properties.
+- **Known MVP limitation — Screen time bypass:** Without `SYSTEM_ALERT_WINDOW`, ChittiBlockActivity can be dismissed via the Android Home button. Screen time enforcement in MVP is a soft deterrent, not a hard block. Parents should be informed of this during onboarding. Full enforcement arrives in v2 with the overlay.
+- **Wake word battery consideration:** Continuous STT listening drains battery. Wake word detection should be active only when the screen is on. Fall back to tap-to-talk when the app is in the background.
+- **Device recommendation for development:** Use a stock Android device (Pixel or Android One). Manufacturer skin issues (MIUI, OneUI) affect background service survival and are a v2 concern.
+- **Lottie assets:** MVP can use a free placeholder Lottie character. Custom Chitti artwork and costume variants can be swapped in without code changes — Lottie file names are the only coupling point.
+- **Claude API key:** Injected via `BuildConfig` at build time. Never committed to source control. Add `CLAUDE_API_KEY` to `.gitignore`-protected local properties.
 - **Offline fallback pool:** Ship with a minimum of 20 pre-written fallback responses covering: curiosity questions, homework encouragement, feelings/emotions, and generic "I don't know, let's find out together" responses.
-- **AlarmManager reliability:** `setExactAndAllowWhileIdle()` is required for Doze mode. All alarms must be re-registered on boot via `RECEIVE_BOOT_COMPLETED` broadcast receiver.
+- **AlarmManager reliability:** `setExactAndAllowWhileIdle()` is required for Doze mode. All alarms must be re-registered on boot via `RECEIVE_BOOT_COMPLETED`.
