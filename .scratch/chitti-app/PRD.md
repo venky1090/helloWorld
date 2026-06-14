@@ -93,17 +93,17 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 
 **KidHomeScreen**
 - Primary child-facing UI built in Jetpack Compose
-- Displays: Chitti character (Lottie), today's pending task checklist, upcoming tasks tab, points balance, badge count, costume selector, screen time remaining indicator
+- Displays: Chitti character (Lottie), today's pending task checklist, upcoming tasks tab, points earned today and current points balance (two distinct figures — see RewardSystem), badge count, costume selector, screen time remaining indicator
 - Task row: name, estimated duration, "Done" button
-- Wake word detection ("Hey Chitti", "Hi Chitti") and tap-on-character both trigger QnAEngine session
+- Activation: wake word ("Hey Chitti", "Hi Chitti") detected by the on-device wake-word engine (see QnAEngine) and tap-on-character both trigger a QnAEngine session
 - Receives task completion events → triggers ChittiCharacter celebration sequence
 
 **TaskEngine**
 - Manages task lifecycle: create, read, update, delete, toggle active
-- Computes "due today" list from schedule rules and current date (midnight rollover boundary)
+- Computes the "today" list (`getPendingToday`) from schedule rules and current date (midnight rollover boundary): **all** tasks scheduled for today that are not yet completed, regardless of the time of day (so the child can see later-today tasks too). Reminders/escalation fire at each task's scheduled time, independently of this list.
 - Computes "upcoming" list for next 7 days for child preview
 - Registers/cancels AlarmManager alarms when tasks are saved or modified
-- On alarm fire: posts tiered notification (immediate), registers 5-minute delayed alarm for full-screen escalation if not acknowledged
+- On alarm fire: hands off to NotificationService, which owns the tiered-notification + 5-minute escalation flow (TaskEngine does not register escalation alarms itself — see NotificationService). This keeps a single owner for escalation alarms.
 - `markComplete(taskId)`: records completion timestamp, triggers RewardSystem point award, cancels pending escalation alarm
 - Calendar-like scheduling edge cases:
   - Device off at task time → fire on next boot; skip if > 2 hours past due
@@ -112,11 +112,12 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 - Exposes: `getPendingToday(): List<Task>`, `getUpcoming(days: Int): List<ScheduledTask>`, `markComplete(taskId)`, `createTask(task)`, `updateTask(task)`, `deleteTask(taskId)`
 
 **RewardSystem**
-- Maintains points ledger in Room database (append-only transaction log)
-- Badge/level rules: static threshold table (e.g. 50pts = Bronze badge, 200pts = Silver)
-- Costume unlocks: static table mapping point milestones to Lottie costume asset names
-- Screen time bonus: child manually redeems points from KidHomeScreen via a "Redeem" action. `redeemForScreenTime(points)` calls ScreenTimeRestrictions to credit extra minutes at the parent-configured rate.
-- Exposes: `awardPoints(taskId, points)`, `getBalance(): Int`, `checkNewBadges(): List<Badge>`, `getUnlockedCostumes(): List<Costume>`, `redeemForScreenTime(points)`, `getHistory(): List<PointTransaction>`
+- Maintains a single points ledger in Room database (append-only transaction log). There is **one balance**: `awardPoints` writes positive rows, `redeemForScreenTime` writes negative rows. `getBalance()` is the running sum (current spendable points). The ledger is never mutated in place.
+- `getEarnedToday(): Int` sums only positive (award) rows dated today — this is the "progress today" figure shown on KidHomeScreen, distinct from the spendable balance.
+- Badge/level rules: static threshold table (e.g. 50pts = Bronze badge, 200pts = Silver). Badge and costume unlocks are evaluated against the **current balance**, so redeeming points for screen time can lower the balance below a threshold and delay or remove access to higher-tier unlocks. (Single-balance model — there is no separate lifetime-earned total.)
+- Costume unlocks: static table mapping point milestones to Lottie costume asset names. The child's currently-selected costume is persisted on `ChildProfile`; `setActiveCostume(costume)` changes which unlocked costume Chitti wears.
+- Screen time bonus: child manually redeems points from KidHomeScreen via a "Redeem" action. `redeemForScreenTime(points)` calls ScreenTimeRestrictions to credit extra minutes at the parent-configured rate, and records the negative ledger row.
+- Exposes: `awardPoints(taskId, points)`, `getBalance(): Int`, `getEarnedToday(): Int`, `checkNewBadges(): List<Badge>`, `getUnlockedCostumes(): List<Costume>`, `setActiveCostume(costume)`, `redeemForScreenTime(points)`, `getHistory(): List<PointTransaction>`
 
 **ScreenTimeRestrictions**
 - Stores parent-configured device-wide time windows in Room (start time, end time, days active)
@@ -128,11 +129,11 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 - Exposes: `setRestriction(restriction)`, `checkCurrentlyRestricted(): Boolean`, `creditExtraMinutes(minutes)`
 
 **QnAEngine**
-- Activation: passive wake word detection ("Hey Chitti", "Hi Chitti") via Android `SpeechRecognizer`; also activated by tap on Chitti character. Wake word listening active only while screen is on.
+- Activation: passive wake word detection ("Hey Chitti", "Hi Chitti") via a dedicated on-device wake-word engine (e.g. Porcupine / Picovoice). Android `SpeechRecognizer` cannot reliably spot always-on wake words, so it is used only to capture the *utterance* after the wake word (or a tap on the Chitti character) opens a session. Tap-on-character is the always-available fallback. Wake-word listening is active only while the screen is on; it falls back to tap-to-talk when the app is backgrounded.
 - Multi-turn: maintains a session context window of the last 6 exchanges, included in each Claude API call
 - Session ends after 60 seconds of silence or "bye Chitti" utterance
 - Online path: sends conversation history + new utterance to Claude API with kid-safe system prompt. Response text fed to ChittiCharacter TTS.
-- Offline/error path: selects from bundled pool of generic fallback responses by category (curiosity, homework, feelings)
+- Offline/error path: selects from a bundled pool of generic fallback responses. Category is chosen by a simple on-device keyword heuristic over the utterance (curiosity, homework, feelings); a random response is picked within the matched category, falling back to the generic "I don't know, let's find out together" category when nothing matches.
 - Exposes: `startSession()`, `endSession()`, `ask(utterance: String, onResult: (String) -> Unit)`
 
 **ParentDashboard**
@@ -150,7 +151,7 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 - Survives device reboot via `RECEIVE_BOOT_COMPLETED` broadcast receiver
 - On boot: re-registers all active AlarmManager alarms from the database
 - Manages notification channels: task reminders, screen time warnings
-- Escalation logic: on notification post, schedules a secondary alarm 5 minutes later; cancelled on child acknowledgement
+- Escalation logic (single owner): on notification post, schedules a secondary escalation alarm 5 minutes later via `AlarmScheduler`; cancelled on child acknowledgement (or when `TaskEngine.markComplete` is called)
 
 ### Scheduling Approach
 - `AlarmManager.setExactAndAllowWhileIdle()` for all time-critical alarms (task due, screen time cutoff)
@@ -169,6 +170,15 @@ Parents configure everything through a PIN-gated section of the same app. No sep
 - Conversation history: last 6 exchanges included per API call
 - API key stored in `BuildConfig` (injected at build time, not in source control)
 - Timeout: 8 seconds → offline fallback path on timeout
+
+### Permissions & Dependencies
+- MVP runtime/manifest permissions (back stories 30–31 onboarding + Permission Health Check):
+  - `POST_NOTIFICATIONS` — task reminders and screen time warnings
+  - `FOREGROUND_SERVICE` (+ `FOREGROUND_SERVICE_*` subtype as required by target SDK) — persistent timer/reminder service
+  - `RECEIVE_BOOT_COMPLETED` — re-register alarms and restart the service after reboot
+  - `RECORD_AUDIO` — child voice input (wake word + utterance capture)
+- The Permission Health Check screen detects any of the above being revoked and guides the parent to re-enable them.
+- Key third-party dependencies: Lottie (`lottie-compose`), Room, Hilt, Retrofit + OkHttp, Jetpack Security (`EncryptedSharedPreferences`), and an on-device wake-word engine (e.g. Porcupine / Picovoice) for "Hey Chitti" detection.
 
 ### Data Flow: Task Reminder
 ```
@@ -209,18 +219,21 @@ Child taps "Redeem" on KidHomeScreen
 Tests should verify observable external behaviour through the module's public interface, not implementation details. A test should remain valid if the internal implementation is refactored. Avoid testing private methods, Room DAO internals, or Android framework internals — use fakes/in-memory databases instead.
 
 **TaskEngine**
-- `getPendingToday()` returns only tasks scheduled for today's day-of-week at or before current time
+- `getPendingToday()` returns all tasks scheduled for today's day-of-week that are not yet completed, regardless of time of day
 - `markComplete()` records a completion entry and does NOT re-surface the task as pending for the same day
 - `createTask()` with a daily schedule generates the correct AlarmManager registration
-- Escalation: 5-minute follow-up alarm is registered when reminder fires; cancelled when `markComplete()` is called
+- Escalation: `markComplete()` cancels the pending 5-minute escalation alarm (registration is owned/tested via NotificationService)
 - Late-fire rule: task missed by > 2 hours on boot is skipped, not fired
 
 **RewardSystem**
 - `awardPoints()` appends to the ledger and `getBalance()` reflects the new total
 - Badge threshold logic: awarding points across a threshold triggers `checkNewBadges()` returning the new badge
 - Costume unlock: points reaching a milestone returns the correct costume in `getUnlockedCostumes()`
-- `redeemForScreenTime()`: given balance and configured rate, correct minutes calculated and `creditExtraMinutes()` called
-- Ledger is append-only: past transactions are never modified
+- `redeemForScreenTime()`: given balance and configured rate, correct minutes calculated, `creditExtraMinutes()` called, and a negative ledger row recorded so `getBalance()` decreases by the redeemed points
+- Single-balance unlock rule: after a redemption drops the balance below a milestone, `getUnlockedCostumes()` no longer returns that costume (unlock is evaluated against current balance, not lifetime earned)
+- `getEarnedToday()` sums only positive award rows dated today and is unaffected by redemptions
+- `setActiveCostume()` persists the selection and only succeeds for a currently-unlocked costume
+- Ledger is append-only: past transactions are never modified (redemptions are new negative rows)
 
 **ScreenTimeRestrictions**
 - `checkCurrentlyRestricted()` returns `true` only within a configured window on a matching day
@@ -253,7 +266,7 @@ Tests should verify observable external behaviour through the module's public in
 ## Further Notes
 
 - **Known MVP limitation — Screen time bypass:** Without `SYSTEM_ALERT_WINDOW`, ChittiBlockActivity can be dismissed via the Android Home button. Screen time enforcement in MVP is a soft deterrent, not a hard block. Parents should be informed of this during onboarding. Full enforcement arrives in v2 with the overlay.
-- **Wake word battery consideration:** Continuous STT listening drains battery. Wake word detection should be active only when the screen is on. Fall back to tap-to-talk when the app is in the background.
+- **Wake word battery consideration:** Continuous audio listening drains battery. Wake-word detection uses a dedicated on-device engine (e.g. Porcupine), not Android `SpeechRecognizer` (which cannot reliably spot always-on wake words). Keep wake-word detection active only when the screen is on; fall back to tap-to-talk when the app is in the background.
 - **Device recommendation for development:** Use a stock Android device (Pixel or Android One). Manufacturer skin issues (MIUI, OneUI) affect background service survival and are a v2 concern.
 - **Lottie assets:** MVP can use a free placeholder Lottie character. Custom Chitti artwork and costume variants can be swapped in without code changes — Lottie file names are the only coupling point.
 - **Claude API key:** Injected via `BuildConfig` at build time. Never committed to source control. Add `CLAUDE_API_KEY` to `.gitignore`-protected local properties.
